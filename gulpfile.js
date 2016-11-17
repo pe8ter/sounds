@@ -8,14 +8,12 @@ const mergeStream = require('merge-stream');
 const typescript = require('typescript');
 const del = require('del');
 const Builder = require('systemjs-builder');
-const karma = require('karma');
 const join = require('path').join;
 
 // ---------------------------------------------------------------------------------------------------------------------
 //  Settings
 // ---------------------------------------------------------------------------------------------------------------------
 
-const DEPLOY = 'deploy';
 const DIST = 'dist';
 let TARGET = 'dev';
 const SRC = 'src';
@@ -54,28 +52,15 @@ gulp.task('default', (done) => {
 // ---------------------------------------------------------------------------------------------------------------------
 
 gulp.task('build', (done) => {
-    runSequence('clean.target', ['build.src'], done);
-});
-
-gulp.task('build.prod', (done) => {
-    TARGET = 'prod';
-    MINIFY = true;
-    LINTFAIL = true;
-    runSequence('build', done);
-});
-
-gulp.task('build.src', (done) => {
     runSequence(
-        'clean.target',
+        'clean',
         [
             'copy.assets',
             'copy.lib',
             'copy.html',
             'copy.css',
-        ],
-        'bundle.rxjs',
-        'transpile',
-        [
+            'bundle.rxjs',
+            'transpile',
             'lint.ts',
             'lint.css',
         ],
@@ -94,8 +79,8 @@ gulp.task('watch', () => {
 //  Clean Tasks
 // ---------------------------------------------------------------------------------------------------------------------
 
-gulp.task('clean.target', (done) => {
-    cleanDir(join(DIST, TARGET), done);
+gulp.task('clean', (done) => {
+    del(join(DIST, TARGET)).then(() => done());
 });
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -189,14 +174,6 @@ gulp.task('copy.assets', () => {
 //  Helpers
 // ---------------------------------------------------------------------------------------------------------------------
 
-function isProd() {
-    return TARGET === 'prod';
-}
-
-function cleanDir(dir, done) {
-    del(dir).then(() => done());
-}
-
 const transpile = (() => {
 
     // Create TypeScript transpiler project BEFORE starting watch tasks.
@@ -214,7 +191,3 @@ const transpile = (() => {
             .pipe(gulp.dest(join(DIST, TARGET)));
     };
 })();
-
-function pluginError(plugin, message, showStack) {
-    return new plugins.util.PluginError({ plugin, message, showStack: !!showStack });
-}
