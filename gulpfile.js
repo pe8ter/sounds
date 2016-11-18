@@ -43,7 +43,9 @@ const ASSETS = [];
 //  Top-Level Tasks
 // ---------------------------------------------------------------------------------------------------------------------
 
-gulp.task('default', (done) => {
+gulp.task('default', ['build']);
+
+gulp.task('start', (done) => {
     runSequence('build', 'watch', done);
 });
 

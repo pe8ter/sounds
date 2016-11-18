@@ -29,13 +29,13 @@ $ npm i
 Build the project once:
 
 ```bash
-$ gulp build
+$ gulp
 ```
 
 Build the project once and watch for changes to incrementally rebuild:
 
 ```bash
-$ gulp
+$ gulp start
 ```
 
 Build output goes into `{project-root}/dist/dev`.
