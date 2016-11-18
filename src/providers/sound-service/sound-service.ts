@@ -1,8 +1,6 @@
 
 import { Injectable } from '@angular/core';
 
-// declare function webkitAudioContext();
-
 @Injectable()
 export class SoundService {
 
