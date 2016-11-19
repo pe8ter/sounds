@@ -16,6 +16,10 @@ export class SoundsApp {
 
     public playPauseTitle = PLAY;
 
+    public onToneTypeSelect(type: string) {
+        this._toneType = type;
+    }
+
     public onPlayPauseClick(): void {
         if (this._playing) {
             this._playing = false;
@@ -23,7 +27,7 @@ export class SoundsApp {
             this.playPauseTitle = PLAY;
         } else {
             this._playing = true;
-            this._sound.play();
+            this._sound.play(this._toneType);
             this.playPauseTitle = PAUSE;
         }
     }
@@ -31,4 +35,6 @@ export class SoundsApp {
     constructor(private _sound: SoundService) {}
 
     private _playing = false;
+
+    private _toneType = 'sine';
 }

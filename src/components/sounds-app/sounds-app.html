@@ -1,5 +1,14 @@
 <h1>Sounds</h1>
 
 <p>
+    <select (change)="onToneTypeSelect($event.target.value)">
+        <option value="sine">sine</option>
+        <option value="square">square</option>
+        <option value="sawtooth">sawtooth</option>
+        <option value="triangle">triangle</option>
+    </select>
+</p>
+
+<p>
     <button (click)="onPlayPauseClick()">{{playPauseTitle}}</button>
 </p>

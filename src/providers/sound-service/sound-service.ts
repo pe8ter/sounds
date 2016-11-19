@@ -4,8 +4,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SoundService {
 
-    public play(): void {
+    public play(type: string): void {
         this._oscillator = this._ctx.createOscillator();
+        this._oscillator.type = type;
         this._oscillator.connect(this._ctx.destination);
         this._oscillator.start();
     }
